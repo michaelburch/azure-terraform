@@ -1,3 +1,4 @@
+
 resource "azurerm_eventhub_namespace" "namespace" {
   name                = var.namespace_name
   location            = var.location
@@ -5,6 +6,12 @@ resource "azurerm_eventhub_namespace" "namespace" {
   sku                 = var.sku
   capacity            = var.capacity
   tags                = var.tags
+  network_rulesets    = [ 
+    { 
+      default_action = "Deny"
+      virtual_network_rule = var.allowed_subnets
+    }
+   ]
 }
 
 resource "azurerm_eventhub" "hub" {

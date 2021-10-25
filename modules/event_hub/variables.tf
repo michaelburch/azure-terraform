@@ -45,3 +45,11 @@ variable "sku" {
     error_message = "The eventhub sku is invalid."
   }
 }
+
+variable "allowed_subnets" {
+  description = "subnets"
+  type = list(object({
+    subnet_id                                           = string
+  }))
+  default = []
+}
