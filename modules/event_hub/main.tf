@@ -9,7 +9,19 @@ resource "azurerm_eventhub_namespace" "namespace" {
   network_rulesets    = [ 
     { 
       default_action = "Deny"
-      virtual_network_rule = var.allowed_subnets
+      trusted_service_access_enabled = true
+      virtual_network_rule = [
+        for subnet in var.allowed_subnets: {
+          subnet_id                                       = subnet
+          ignore_missing_virtual_network_service_endpoint = true
+        }
+      ]
+      ip_rule = [
+        for ip in var.allowed_ips: {
+          ip_mask = ip
+          action  = "Allow"
+        }
+      ]
     }
    ]
 }

@@ -48,8 +48,12 @@ variable "sku" {
 
 variable "allowed_subnets" {
   description = "subnets"
-  type = list(object({
-    subnet_id                                           = string
-  }))
+  type = list(string)
+  default = []
+}
+
+variable "allowed_ips" {
+  description = "permitted ip ranges"
+  type = list(string)
   default = []
 }
